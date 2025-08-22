@@ -61,9 +61,11 @@ def split_text_into_cards(text: str, title_pattern: str, header_pattern: str) ->
         list[Card]: A list of Card objects.
     """
     lines = text.splitlines()
+    
     cards = []
     current_title = ""
     current_content = ""
+
     for line in lines:
         title_match = re.search(title_pattern, line)
         # If we find a new title, we save the current card and start a new one
@@ -145,7 +147,6 @@ def main():
 
     cards = split_text_into_cards(data, title_pattern=args.title_pattern, header_pattern=args.header_pattern)
     logger.info(f"Generated {len(cards)} cards from the input data.")
-    print(cards)
     write_cards(args.output, cards)
     logger.info("Data written successfully to the output directory.")
 
