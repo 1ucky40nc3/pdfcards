@@ -24,7 +24,10 @@ Exatract data from a PDF file and create index cards.
 
 ```bash
 # Note: files in the ./data and ./output directories are hidden by the .gitignore file
-pdfcards --input data/example.pdf --output outputs/example-indexcards.pdf --title_pattern "^#+\*\*(\d+\.\d+)" --header_pattern "^#+"
+pdfcards --input data/example.pdf --output output/example-indexcards.pdf --title_pattern "^#+ \*\*(\d+\.\d+)" --header_pattern "^#+"
+# Use marker to convert a PDF file into markdown and use the markdown as input for pdfcards
+marker_single /path/to/file.pdf --output_format markdown --output_dir output/
+pdfcards --markdown outputs/file.md --output output/card.pdf --title_pattern "^#+ \*\*(\d+\.\d+)" --header_pattern "^#+"
 ```
 
 ## Documentation
