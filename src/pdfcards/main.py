@@ -5,6 +5,7 @@ import re
 from marker.converters.pdf import PdfConverter
 from marker.models import create_model_dict
 from marker.output import text_from_rendered
+from markdown_pdf import MarkdownPdf, Section
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -26,6 +27,7 @@ def read_data(input_path: str) -> str:
     rendered = converter(input_path)
     text, *_ = text_from_rendered(rendered)
     return text
+
 
 def read_markdown(input_path: str) -> str:
     """Read the content of a markdown file.
@@ -64,25 +66,34 @@ def split_text_into_cards(text: str, title_pattern: str, header_pattern: str) ->
     current_content = ""
     for line in lines:
         title_match = re.search(title_pattern, line)
+        # If we find a new title, we save the current card and start a new one
         if title_match:
             if current_title:
                 cards.append(Card(title=current_title, content=current_content))
+            # Start a new card
             current_title = line.strip()
+            current_content = ""
         else:
+            # If the line matches the header pattern, we append it to the current title
             header_match = re.search(header_pattern, line)
             if header_match and current_title:
                 current_title += f"{line.strip()}\n"
-            else:
-                current_content += f"{line.strip()}\n"
-        #print(current_title)
+        
+        current_content += f"{line.strip()}\n"
+
     if current_title:
         cards.append(Card(title=current_title, content=current_content))
+    
     return cards
 
 
 def write_cards(output_path: str, cards: list[Card]) -> None:
     """Write data to a specified output path."""
-
+    pdf = MarkdownPdf(optimize=True)
+    for card in cards:
+        pdf.add_section(Section(card.title, toc=False, paper_size="A5"))
+        pdf.add_section(Section(card.content, toc=False, paper_size="A5"))
+    pdf.save(output_path)  
 
 def main():
     parser = argparse.ArgumentParser(description="PDF Cards Generator")
@@ -131,8 +142,7 @@ def main():
         assert args.input, "You either have to provide a PDF input file via `--input` or a markdown file with `--markdown`!"
         data = read_data(args.input)
         logger.info("Data read successfully from the input file.")
-    print(data)
-    #print(data)
+
     cards = split_text_into_cards(data, title_pattern=args.title_pattern, header_pattern=args.header_pattern)
     logger.info(f"Generated {len(cards)} cards from the input data.")
     print(cards)
