@@ -13,6 +13,9 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 
+PAGE_SIZE_OPTIONS = ["A2", "A3", "A4", "A5", "A2-L", "A3-L", "A4-L", "A5-L"]
+
+
 def read_data(input_path: str, page_range: str | None = None) -> str:
     """Read PDF data from a specified input path.
     
@@ -146,14 +149,14 @@ def main():
         type=str,
         default="A5-L",
         help="Page format for the title page of each card.",
-        choices=["A3", "A4", "A5", "A3-L", "A4-L", "A5-L"],
+        choices=PAGE_SIZE_OPTIONS,
     )
     parser.add_argument(
         "--content_page_format",
         type=str,
         default="A3-L",
         help="Page format for the content page of each card.",
-        choices=["A3", "A4", "A5", "A3-L", "A4-L", "A5-L"],
+        choices=PAGE_SIZE_OPTIONS,
     )
     parser.add_argument(
         "--page_range",
