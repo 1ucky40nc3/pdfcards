@@ -93,8 +93,8 @@ def write_cards(output_path: str, cards: list[Card]) -> None:
     """Write data to a specified output path."""
     pdf = MarkdownPdf(optimize=True)
     for card in cards:
-        pdf.add_section(Section(card.title, toc=False, paper_size="A5"))
-        pdf.add_section(Section(card.content, toc=False, paper_size="A3"))
+        pdf.add_section(Section(card.title, toc=False, paper_size="A5-L"))
+        pdf.add_section(Section(card.content, toc=False, paper_size="A3-L"))
     pdf.save(output_path)  
 
 

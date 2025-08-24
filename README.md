@@ -39,4 +39,4 @@ The PDF to markdown conversion is done using the [marker](https://github.com/dat
 Each index card consists of a **title** and (hidden) **content**. Titles primarily found using the `--title_pattern` regex. Additional information can be added to the titles (such as headers) using the `--header_pattern`. Each of the regex patterns match lines in the converted markdown text and add them to a cards title.
 Every time a new line matches with `--title_pattern` regex we create a new card. Any line that does not match with a `--title_pattern` or `--header_pattern` regex is added to the content of a the current card.
 
-At the end a output PDF is created. Every odd paged of the pdf is the title of a card. Every even page is the hidden content.
+At the end a output PDF is created. Every odd paged of the pdf is the title of a card. Every even page is the hidden content. Every odd page has the A5 size. Even pages have a A3 size to consolidate more information.
