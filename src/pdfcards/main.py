@@ -61,7 +61,7 @@ def split_text_into_cards(text: str, title_pattern: str, header_pattern: str) ->
         list[Card]: A list of Card objects.
     """
     lines = text.splitlines()
-    
+
     cards = []
     current_title = ""
     current_content = ""
@@ -94,8 +94,9 @@ def write_cards(output_path: str, cards: list[Card]) -> None:
     pdf = MarkdownPdf(optimize=True)
     for card in cards:
         pdf.add_section(Section(card.title, toc=False, paper_size="A5"))
-        pdf.add_section(Section(card.content, toc=False, paper_size="A5"))
+        pdf.add_section(Section(card.content, toc=False, paper_size="A3"))
     pdf.save(output_path)  
+
 
 def main():
     parser = argparse.ArgumentParser(description="PDF Cards Generator")
