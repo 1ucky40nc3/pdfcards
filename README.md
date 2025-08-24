@@ -24,10 +24,21 @@ Exatract data from a PDF file and create index cards.
 
 ```bash
 # Note: files in the ./data and ./output directories are hidden by the .gitignore file
-pdfcards --input data/example.pdf --output output/example-indexcards.pdf --title_pattern "^#+ \*\*(\d+\.\d+)" --header_pattern "^#+"
+pdfcards --input data/example.pdf --output output/example-indexcards.pdf --title_pattern "^#+ \*\*(\d+\.\d+)" --header_pattern "^#+" --title_page_format "A5-L" --content_page_format "A3-L"
 # Use marker to convert a PDF file into markdown and use the markdown as input for pdfcards
 marker_single /path/to/file.pdf --output_format markdown --output_dir output/
-pdfcards --markdown outputs/file.md --output output/card.pdf --title_pattern "^#+ \*\*(\d+\.\d+)" --header_pattern "^#+"
+pdfcards --markdown outputs/file.md --output output/card.pdf --title_pattern "^#+ \*\*(\d+\.\d+)" --header_pattern "^#+" --title_page_format "A5-L" --content_page_format "A3-L"
+```
+
+Using the `--page_range` argument you can optionally process selected PDF page ranges.
+
+```bash
+# Note: files in the ./data and ./output directories are hidden by the .gitignore file
+# Note: In the following examples we select the PDF page 0, 5 to 10 and page 20
+pdfcards --input data/example.pdf --output output/example-indexcards.pdf --title_pattern "^#+ \*\*(\d+\.\d+)" --header_pattern "^#+" --title_page_format "A5-L" --content_page_format "A3-L" --page_range "0,5-10,20"
+# Use marker to convert a PDF file into markdown and use the markdown as input for pdfcards
+marker_single /path/to/file.pdf --output_format markdown --output_dir output/ --page_range "0,5-10,20"
+pdfcards --markdown outputs/file.md --output output/card.pdf --title_pattern "^#+ \*\*(\d+\.\d+)" --header_pattern "^#+" --title_page_format "A5-L" --content_page_format "A3-L"
 ```
 
 ## Documentation
